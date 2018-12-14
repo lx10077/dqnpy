@@ -6,11 +6,11 @@ import numpy as np
 USE_CUDA = torch.cuda.is_available()
 FLOAT = torch.cuda.FloatTensor if USE_CUDA else torch.FloatTensor
 DOUBLE = torch.cuda.DoubleTensor if USE_CUDA else torch.DoubleTensor
-INT = torch.cuda.LongTensor if USE_CUDA else torch.LongTensor
+LONG = torch.cuda.LongTensor if USE_CUDA else torch.LongTensor
 
 TYPE_LIST = {"FLOAT": (np.float32, FLOAT),
              "DOUBLE": (np.float64, DOUBLE),
-             "LONG": (np.int64, INT)}
+             "LONG": (np.int64, LONG)}
 
 
 def to_numpy(ten):
@@ -25,7 +25,7 @@ def to_tensor(ndarray, requires_grad=False, dtype="FLOAT"):
     return ten.cuda() if USE_CUDA else ten
 
 
-def train_dir(game_name: str, exp_name="Baseline"):
+def train_dir(exp_name: str):
     def make_soft_link(base_path, soft_path):
 
         if not os.path.exists(soft_path):
@@ -40,13 +40,19 @@ def train_dir(game_name: str, exp_name="Baseline"):
 
     abs_path = soft_path = os.path.abspath(__file__)
     try:
-        while abs_path.split(os.path.sep)[-1] != "config":
+        count = 0
+        project_name = current = abs_path.split(os.path.sep)[-1]
+        while count < 50 and current != "config":
+            project_name = current
             abs_path = os.path.dirname(abs_path)
+            current = abs_path.split(os.path.sep)[-1]
+            count += 1
+            if count >= 50:
+                raise ValueError("Make sure your codes lie in a CONFIG file!")
     except Exception as e:
-        print("Make sure your codes lie in a CONFIG file!")
         raise Exception(e)
 
-    abs_path = os.path.abspath(os.path.join(abs_path, '../train_log/{}/{}'.format(game_name, exp_name)))
+    abs_path = os.path.abspath(os.path.join(abs_path, '../train_log/{}/{}'.format(project_name, exp_name)))
     soft_path = os.path.abspath(os.path.join(soft_path, '../train_log/'))
     make_dir(abs_path)
     make_soft_link(abs_path, soft_path)
