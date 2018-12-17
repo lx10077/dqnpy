@@ -31,7 +31,7 @@ def train(env,
 
     state = env.reset()
     start = time.time()
-    for i in range(begin_i + 1, num_iterations):
+    for i in range(begin_i+1, num_iterations):
         action = np.random.randint(env.action_n) if np.random.uniform() < epsilon else model.get_action(state)
         next_state, reward, done, info = env.step(action)
         results_buffer.update_info(info)

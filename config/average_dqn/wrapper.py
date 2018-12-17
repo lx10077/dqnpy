@@ -249,6 +249,7 @@ class Atari_Wrapper(object):
         self.env = atari_env(game_name)
         self.game_info = GameInfo()
         self.action_n = self.env.action_space.n
+        self.allowed_actions = list(range(self.action_n))
 
     def reset(self):
         self.seed()
