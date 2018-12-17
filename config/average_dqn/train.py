@@ -38,10 +38,11 @@ def train(env,
         memory_buffer.append((state, action, reward, next_state, done))
         state = next_state
 
-        if i > 0 and i % (update_every * update_target_every) == 0:
+        if i > 0 and i % update_every == 0:
             summaries = model.update(*memory_buffer.sample(batch_size))
             results_buffer.update_info(summaries)
 
+        if i > 0 and i % (update_every * update_target_every) == 0:
             model.update_target()
             model.save(model_path, i)
 

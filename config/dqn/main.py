@@ -8,7 +8,7 @@ from util import train_dir
 @click.command()
 @click.option('--game_name', prompt='game name: (with NoFrameskip-v4)')
 @click.option('--lr', type=float, default=1e-4)
-@click.option('--update_target_every', type=int, default=4)
+@click.option('--update_target_every', type=int, default=2500)
 def main(game_name, lr, update_target_every):
     if 'NoFrameskip-v4' not in game_name:
         game_name = game_name + 'NoFrameskip-v4'
@@ -27,8 +27,8 @@ def main(game_name, lr, update_target_every):
           update_every=4,
           update_target_every=update_target_every,
           learning_starts=5000,
-          memory_size=500000,
-          num_iterations=1500000)
+          memory_size=100000,
+          num_iterations=200000000)
 
 
 if __name__ == "__main__":
