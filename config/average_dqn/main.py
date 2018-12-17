@@ -10,6 +10,8 @@ from util import train_dir
 @click.option('--lr', type=float, default=1e-4)
 @click.option('--update_target_every', type=int, default=4)
 def main(game_name, lr, update_target_every):
+    if 'NoFrameskip-v4' not in game_name:
+        game_name = game_name + 'NoFrameskip-v4'
     assert 'NoFrameskip-v4' in game_name
 
     env = Atari_Wrapper(game_name)

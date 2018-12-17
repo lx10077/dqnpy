@@ -34,8 +34,8 @@ class ADQN:
 
         if USE_CUDA:
             self.net.cuda()
-            for i in range(k):
-                self.target_nets[k].cuda()
+            for i in range(self.k):
+                self.target_nets[i].cuda()
 
         self.optimizer = torch.optim.Adam(params=self.net.parameters(), lr=lr)
 

@@ -6,9 +6,12 @@ from util import train_dir
 
 
 @click.command()
+@click.option('--game_name', prompt='game name: (with NoFrameskip-v4)')
 @click.option('--lr', type=float, default=1e-4)
 @click.option('--update_target_every', type=int, default=4)
-def main(lr, update_target_every, game_name="PongNoFrameskip-v4"):
+def main(game_name, lr, update_target_every):
+    if 'NoFrameskip-v4' not in game_name:
+        game_name = game_name + 'NoFrameskip-v4'
     assert 'NoFrameskip-v4' in game_name
 
     env = Atari_Wrapper(game_name)
