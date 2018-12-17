@@ -65,7 +65,7 @@ class ADQN:
         loss.backward()
         self.optimizer.step()
 
-        return {'update/loss': loss, 'update/max_q_value': max_q_value}
+        return {'update/loss': loss, 'update/max_q_value': max_q_value, "avg_reward": rewards.mean()}
 
     def update_target(self):
         self.active_q = min(self.k, self.active_q + 1)

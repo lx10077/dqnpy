@@ -26,9 +26,9 @@ def main(game_name, lr, update_target_every):
           epsilon=0.01,
           update_every=4,
           update_target_every=update_target_every,
-          learning_starts=1000,
-          memory_size=1000,
-          num_iterations=20000)
+          learning_starts=5000,
+          memory_size=500000,
+          num_iterations=1500000)
 
 
 if __name__ == "__main__":
